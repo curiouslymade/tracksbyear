@@ -1,0 +1,23 @@
+# Security and cache headers for Cloudflare static assets.
+# The build fills each placeholder in double braces from site.config.json and writes dist/_headers.
+# Do not edit dist/_headers. Edit this file or site.config.json.
+
+/*
+  Content-Security-Policy: {{csp}}
+  Strict-Transport-Security: {{hsts}}
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: {{permissionsPolicy}}
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+{{robotsHeader}}
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=2592000
+
+/icons/*
+  Cache-Control: public, max-age=604800

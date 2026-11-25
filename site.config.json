@@ -1,0 +1,21 @@
+{
+  "name": "Tracks by Year",
+  "shortName": "Tracks by Year",
+  "title": "Tracks by Year",
+  "description": "Put the songs of your life on a timeline, and see when you first heard each one.",
+  "url": "https://tracksbyear.curiouslymade.dev/",
+  "hub": "https://curiouslymade.dev/",
+  "repo": "https://github.com/curiouslymade/tracksbyear",
+  "sourceLink": true,
+  "indexed": true,
+  "themeColor": "#3b2244",
+  "backgroundColor": "#ebe3d5",
+  "iconText": "",
+  "services": {
+    "connect": ["https://musicbrainz.org"],
+    "img": ["blob:"],
+    "media": []
+  },
+  "permissionsAllow": [],
+  "hstsPreload": false
+}

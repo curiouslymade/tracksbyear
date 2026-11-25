@@ -1,0 +1,4 @@
+# Keep LF line ends, so the git hook and the scripts work on Windows, macOS and Linux.
+* text=auto eol=lf
+*.png binary
+*.woff2 binary

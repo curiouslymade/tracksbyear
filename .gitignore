@@ -1,0 +1,14 @@
+# Secrets: never commit these
+.env*
+.dev.vars*
+
+# Local tools and build output
+.wrangler/
+node_modules/
+dist/
+
+# Editor and system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

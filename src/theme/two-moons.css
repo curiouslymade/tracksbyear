@@ -1,0 +1,119 @@
+/*
+ * Two Moons: tokens and the base components this app uses.
+ * Source: the Two Moons design system (tokens.json and components/bundle.css).
+ * Use the token names. Do not add hex values outside this file and src/genres.ts.
+ * The fonts are self-hosted Latin subsets (see public/fonts). The images are files in public/images,
+ * not data: URIs, so the Content Security Policy can stay at img-src 'self'.
+ */
+
+@font-face { font-family: 'Poiret One'; src: url('/fonts/poiret-one-latin.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Jost'; src: url('/fonts/jost-latin.woff2') format('woff2'); font-weight: 400 600; font-style: normal; font-display: swap; }
+
+:root,
+[data-theme='day'] {
+  --ground: #ebe3d5;
+  --surface: #f4eee4;
+  --surface-sunken: #e1d7c6;
+  --surface-hover: #e4dbcc;
+  --line: #cbbfab;
+  --line-strong: #7c7262;
+  --ink: #2b1d13;
+  --ink-muted: #5c4b3d;
+  --heading-ink: #3b2244;
+  --orchid: #8e3f95;
+  --terracotta: #a4532b;
+  --terracotta-ink: #8a4222;
+  --terracotta-hover: #8a4423;
+  --on-terracotta: #fff7ee;
+  --terracotta-soft: rgba(164, 83, 43, 0.1);
+  --umber-soft: rgba(65, 51, 41, 0.08);
+  --sand: #edb98a;
+  --lilac: #e5c6ff;
+  --focus-ring: #3b2244;
+  --select-chevron: url("/images/chevron-day.svg");
+  /* Chart slots for the stats view. Checked for colour blindness, in this order, on --surface. */
+  --chart-1: #209993; --chart-2: #8e3b1c; --chart-3: #5188cd; --chart-4: #437224; --chart-5: #b55fba; --chart-6: #7d5e07;
+  --chart-other: #a89c8b; --chart-unknown: #d6cbb9;
+  color-scheme: light;
+}
+
+[data-theme='night'] {
+  --ground: #302015;
+  --surface: #413329;
+  --surface-sunken: #38261a;
+  --surface-hover: #4a3a2e;
+  --line: #514034;
+  --line-strong: #9a8c81;
+  --ink: #fff7ee;
+  --ink-muted: #b6aca3;
+  --heading-ink: #e5c6ff;
+  --orchid: #d593d6;
+  --terracotta-ink: #f09a74;
+  --terracotta-soft: rgba(236, 139, 98, 0.1);
+  --umber-soft: rgba(229, 198, 255, 0.1);
+  --focus-ring: #e5c6ff;
+  --select-chevron: url("/images/chevron-night.svg");
+  --chart-1: #33a6a0; --chart-2: #d76034; --chart-3: #498bdc; --chart-4: #64a737; --chart-5: #bd72c1; --chart-6: #a1790c;
+  --chart-other: #8a7c70; --chart-unknown: #5e4f43;
+  color-scheme: dark;
+}
+
+:root {
+  --font-display: 'Poiret One', 'Josefin Sans', 'Century Gothic', sans-serif;
+  --font-sans: 'Jost', 'Futura', 'Century Gothic', 'Avenir Next', sans-serif;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 64px;
+  --radius-sm: 2px;
+  --radius-pill: 999px;
+  --tm-grain: url("/images/grain.svg");
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--ground);
+  background-image: var(--tm-grain);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 28px;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(button, a, input, select, [tabindex]):focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+
+.tm-kicker { margin: 0; font: 500 15px/20px var(--font-sans); color: var(--terracotta-ink); }
+
+.tm-link { color: var(--terracotta-ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: text-decoration-thickness 150ms ease-out; }
+.tm-link:hover { text-decoration-thickness: 2px; }
+
+/* Button */
+.tm-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: 48px; padding: 0 var(--space-5); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: transparent; color: var(--ink); font: 500 16px/24px var(--font-sans); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out; }
+.tm-btn:hover { background: var(--surface-hover); }
+.tm-btn svg { width: 18px; height: 18px; flex: none; }
+.tm-btn--primary { background: var(--terracotta); border-color: var(--terracotta); color: var(--on-terracotta); }
+.tm-btn--primary:hover { background: var(--terracotta-hover); border-color: var(--terracotta-hover); }
+.tm-btn--quiet { border-color: transparent; color: var(--terracotta-ink); padding: 0 var(--space-2); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.tm-btn--quiet:hover { background: transparent; text-decoration-thickness: 2px; }
+.tm-btn--sm { height: 32px; padding: 0 var(--space-3); font-size: 14px; line-height: 16px; }
+.tm-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+
+/* Fields */
+.tm-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.tm-field__label { font: 500 15px/20px var(--font-sans); color: var(--ink); }
+.tm-input { height: 48px; width: 100%; padding: 0 var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); font: 400 16px/24px var(--font-sans); }
+.tm-input::placeholder { color: var(--ink-muted); opacity: 1; }
+.tm-input[aria-invalid='true'] { border-color: var(--terracotta-ink); }
+.tm-field__error { margin: 0; font: 400 14px/20px var(--font-sans); color: var(--terracotta-ink); }
+
+
+

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Stops a commit when gitleaks finds a secret in the staged changes.
+# "npm install" turns on this hook (scripts/setup-hooks.mjs).
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed, so the commit stops." >&2
+  echo "Install gitleaks: https://github.com/gitleaks/gitleaks" >&2
+  exit 1
+fi
+exec gitleaks git --pre-commit --staged --redact --verbose
