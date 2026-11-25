@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { deleteSong, lookUp, setGenreOverride, setHint, setReleaseDate } from '../actions';
-import { checkReleaseDate, formatUkDate } from '../dates';
+import { checkReleaseDate, formatUkDate, readUkDate } from '../dates';
+import { DateWheels, useTouchScreen } from './DateWheels';
 import type { SongWithEstimate } from '../estimate';
 import { familyFromGenres, GENRES, genreInfo, type GenreFamily } from '../genres';
 import type { LifePeriod, Song } from '../types';
@@ -64,6 +65,7 @@ export function DeleteSongButton({ song, onDeleted }: { song: Song; onDeleted: (
 }
 
 function ReleaseDate({ song }: { song: Song }) {
+  const touch = useTouchScreen();
   const [value, setValue] = useState('');
   const [editing, setEditing] = useState(false);
   // The message shows after the user leaves the field or tries to save, then follows each key.
@@ -79,10 +81,11 @@ function ReleaseDate({ song }: { song: Song }) {
 
   return (
     <div className="tm-field">
-      <span className="tm-field__label">Release date</span>
+      {/* The scroll wheels have their own label. */}
+      {!(editing && touch) && <span className="tm-field__label">Release date</span>}
       {editing ? (
         <form
-          className="row row--center"
+          className={touch ? 'stack-4' : 'row row--center'}
           onSubmit={(e) => {
             e.preventDefault();
             setTouched(true);
@@ -91,6 +94,19 @@ function ReleaseDate({ song }: { song: Song }) {
             setEditing(false);
           }}
         >
+          {touch ? (
+            <DateWheels
+              label="Release date"
+              mode="partial"
+              value={readUkDate(value) ?? ''}
+              onChange={(iso) => {
+                setValue(iso ? formatUkDate(iso) : '');
+                setTouched(true);
+              }}
+              fromYear={1900}
+              toYear={new Date().getUTCFullYear()}
+            />
+          ) : (
           <input
             className="tm-input grow"
             aria-label="Release date"
@@ -110,17 +126,20 @@ function ReleaseDate({ song }: { song: Song }) {
               }
             }}
           />
-          <button className="tm-btn tm-btn--primary" type="submit">
-            Save
-          </button>
-          <button
-            className="tm-btn"
-            type="button"
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => setEditing(false)}
-          >
-            Cancel
-          </button>
+          )}
+          <div className="row row--center">
+            <button className="tm-btn tm-btn--primary" type="submit">
+              Save
+            </button>
+            <button
+              className="tm-btn"
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => setEditing(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       ) : (
         <div className="value-row">

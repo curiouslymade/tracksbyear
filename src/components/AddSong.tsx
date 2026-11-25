@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { addSong } from '../actions';
-import { checkReleaseDate } from '../dates';
+import { checkReleaseDate, formatUkDate, readUkDate } from '../dates';
+import { DateWheels, useTouchScreen } from './DateWheels';
 import { searchSongs, type SongResult } from '../musicbrainz';
 import type { Hint, LifePeriod } from '../types';
 import { HintPicker } from './HintPicker';
@@ -116,6 +117,7 @@ function ManualEntry({ hint }: { hint: Hint }) {
   const [released, setReleased] = useState('');
   const [error, setError] = useState<string>();
   const [done, setDone] = useState<string>();
+  const touch = useTouchScreen();
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -146,15 +148,26 @@ function ManualEntry({ hint }: { hint: Hint }) {
         <span className="tm-field__label">Artist</span>
         <input className="tm-input" value={artist} onChange={(e) => setArtist(e.target.value)} />
       </label>
-      <label className="tm-field">
-        <span className="tm-field__label">Release date (optional)</span>
-        <input
-          className="tm-input"
-          value={released}
-          onChange={(e) => setReleased(e.target.value)}
-          placeholder="dd/mm/yyyy, or leave empty to look it up"
+      {touch ? (
+        <DateWheels
+          label="Release date (optional)"
+          mode="partial"
+          value={readUkDate(released) ?? ''}
+          onChange={(iso) => setReleased(iso ? formatUkDate(iso) : '')}
+          fromYear={1900}
+          toYear={new Date().getUTCFullYear()}
         />
-      </label>
+      ) : (
+        <label className="tm-field">
+          <span className="tm-field__label">Release date (optional)</span>
+          <input
+            className="tm-input"
+            value={released}
+            onChange={(e) => setReleased(e.target.value)}
+            placeholder="dd/mm/yyyy, or leave empty to look it up"
+          />
+        </label>
+      )}
       {error && <p className="tm-field__error">{error}</p>}
       {done && !error && <p className="modal__fine" role="status">{done}</p>}
       <div>

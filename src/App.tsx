@@ -226,6 +226,7 @@ export function App() {
             onShowMoments={setShowMoments}
             player={player}
             onPlayer={setPlayer}
+            onStartedAgain={close}
           />
         </Modal>
       )}
