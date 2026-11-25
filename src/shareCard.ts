@@ -1,6 +1,8 @@
 /**
- * The share image: a 1080 by 1350 card (the 4:5 shape that Instagram and most
- * apps show in full). Drawn on a canvas with the page's own colours and fonts.
+ * The share image: a 1080 by 1440 card. 3:4 is the tallest shape that an Instagram
+ * post shows in full, in the feed and on the profile grid. Drawn on a canvas with the
+ * page's own colours and fonts. The footer gives the address, because a picture on
+ * Instagram cannot hold a link.
  */
 import type { SongWithEstimate } from './estimate';
 import { genreInfo, NO_GENRE_ACCENT, NO_GENRE_BACKDROP } from './genres';
@@ -8,7 +10,7 @@ import { songGenre } from './road';
 import { genreBreakdown } from './stats';
 
 const CARD_W = 1080;
-export const CARD_H = 1350;
+export const CARD_H = 1440;
 const MAX_ROWS = 10;
 
 /**
@@ -55,8 +57,13 @@ function wrap(ctx: CanvasRenderingContext2D, text: string, width: number): strin
   return lines;
 }
 
-/** Draws the card and returns it as a PNG. */
-export async function drawShareCard(items: SongWithEstimate[], title: string, theme: 'day' | 'night'): Promise<Blob> {
+/** The footer text: where to make your own. */
+export function cardFooter(host: string): [lead: string, address: string] {
+  return ['Make your own at ', host];
+}
+
+/** Draws the card and returns it as a PNG. `host` is the address in the footer. */
+export async function drawShareCard(items: SongWithEstimate[], title: string, theme: 'day' | 'night', host: string): Promise<Blob> {
   await Promise.all([
     document.fonts.load('400 80px "Poiret One"'),
     document.fonts.load('400 30px Jost'),
@@ -96,10 +103,13 @@ export async function drawShareCard(items: SongWithEstimate[], title: string, th
   // The timeline: a vertical line, a year and a dot for each song.
   const rows = pickRows(items);
   const more = items.length - rows.length;
-  const top = y + 88;
+  const first = y + 88;
   // Leave room for the "and N more" line and the footer.
   const bottom = CARD_H - (more > 0 ? 250 : 190);
-  const step = Math.min(92, (bottom - top) / Math.max(1, rows.length));
+  const step = Math.min(110, (bottom - first) / Math.max(1, rows.length));
+  // Centre a short list between the summary and the footer, so the card has no big gap.
+  const used = step * rows.length;
+  const top = first + Math.max(0, (bottom - first - used) / 2);
   const lineX = left + 120;
   ctx.strokeStyle = line;
   ctx.lineWidth = 2;
@@ -151,9 +161,14 @@ export async function drawShareCard(items: SongWithEstimate[], title: string, th
   ctx.beginPath();
   ctx.arc(left + 36, fy - 9, 10, 0, Math.PI * 2);
   ctx.fill();
+  const [lead, address] = cardFooter(host);
   ctx.fillStyle = muted;
-  ctx.font = '400 26px Jost';
-  ctx.fillText('Made with Tracks by Year', left + 64, fy);
+  ctx.font = '400 28px Jost';
+  ctx.fillText(lead, left + 64, fy);
+  const leadW = ctx.measureText(lead).width;
+  ctx.fillStyle = ink;
+  ctx.font = '600 28px Jost';
+  ctx.fillText(fit(ctx, address, width - 64 - leadW), left + 64 + leadW, fy);
 
   return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('The image could not be made.'))), 'image/png'));
 }

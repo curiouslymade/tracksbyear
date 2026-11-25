@@ -127,3 +127,11 @@ export async function setReleaseDate(id: number, releaseDate: string | undefined
 export async function deleteSong(id: number): Promise<void> {
   await db.songs.delete(id);
 }
+
+/** Deletes every song and life period, so the timeline is blank. The settings stay. */
+export async function startAgain(): Promise<void> {
+  await db.transaction('rw', db.periods, db.songs, async () => {
+    await db.songs.clear();
+    await db.periods.clear();
+  });
+}

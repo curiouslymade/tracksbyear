@@ -41,7 +41,7 @@ function ShareImage({ items, title, theme }: { items: SongWithEstimate[]; title:
     let live = true;
     let made: string | undefined;
     if (!items.length) return;
-    drawShareCard(items, title, theme)
+    drawShareCard(items, title, theme, location.host)
       .then((blob) => {
         if (!live) return;
         made = URL.createObjectURL(blob);
@@ -58,7 +58,7 @@ function ShareImage({ items, title, theme }: { items: SongWithEstimate[]; title:
   const share = async () => {
     if (!file) return;
     try {
-      await navigator.share({ files: [file], title: 'My music timeline' });
+      await navigator.share({ files: [file], title: 'My tracks by year', text: `Make your own at ${location.origin}/` });
     } catch {
       /* The user closed the share sheet. */
     }
@@ -75,7 +75,7 @@ function ShareImage({ items, title, theme }: { items: SongWithEstimate[]; title:
         <div className="share-image">
           {url ? <img src={url} alt="A picture of your timeline, ready to share" className="share-image__preview" /> : <div className="share-image__preview" />}
           <div className="stack-4">
-            <p className="modal__fine">Sized for Instagram, WhatsApp and most apps.</p>
+            <p className="modal__fine">Sized for Instagram posts (3:4), and it fits WhatsApp and most apps. The address is on the image, so people can find the app.</p>
             <div className="row row--center">
               {file && canShareFiles(file) && (
                 <button className="tm-btn tm-btn--primary" onClick={() => void share()}>
@@ -144,7 +144,7 @@ function ShareLink({ items, periods }: { items: SongWithEstimate[]; periods: Lif
           {copied ? 'Link copied' : 'Copy link'}
         </button>
         {link && typeof navigator.share === 'function' && (
-          <button className="tm-btn" onClick={() => void navigator.share({ url: link, title: 'My music timeline' }).catch(() => undefined)}>
+          <button className="tm-btn" onClick={() => void navigator.share({ url: link, title: 'My tracks by year', text: 'Here are the songs of my life, by year.' }).catch(() => undefined)}>
             Share link
           </button>
         )}

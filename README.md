@@ -12,8 +12,11 @@ Add the times of your life, such as school or a first job, then the songs you re
 - **Move songs.** Drag a song along the timeline to change the year.
 - **Breakdown.** See your genres, the decades your songs come from, the songs in each life period, and some highlights.
 - **Search.** Find a song, an artist, a genre or a life period on the timeline.
-- **Share.** Share the timeline as an image or a link, or download it as playlist files (CSV or text). You can upload the playlist files to TuneMyMusic or Soundiiz.
+- **Share.** Share the timeline as an image or a link, or download it as playlist files (CSV or text). You can upload the playlist files to TuneMyMusic or Soundiiz. The image is 1080 by 1440 pixels, the 3:4 shape of an Instagram post, and it shows the address of the app.
 - **Play.** Each song opens in Spotify or Apple Music. Choose the service in Settings.
+- **Start again.** Settings can clear every song and life period, so you start with a blank timeline.
+
+On a phone, you pick dates with scroll wheels for the day, the month and the year. For a release date, you can leave out the day, or the day and the month.
 
 ## How it estimates when you first heard a song
 

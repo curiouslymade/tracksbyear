@@ -3,6 +3,7 @@ import { addPeriod, deletePeriod, updatePeriod } from '../actions';
 import { formatRange, parsePartialDate } from '../dates';
 import type { LifePeriod } from '../types';
 import { ConfirmDialog } from './ConfirmDialog';
+import { DateWheels, useTouchScreen } from './DateWheels';
 import { PencilIcon, TrashIcon } from './Icons';
 
 /** The life periods: a list with edit and delete, and one form to add or edit a period. */
@@ -14,6 +15,8 @@ export function LifePeriods({ periods }: { periods: LifePeriod[] }) {
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [error, setError] = useState<string>();
+  const touch = useTouchScreen();
+  const lastYear = new Date().getUTCFullYear() + 10;
 
   const fill = (p?: LifePeriod) => {
     setEditing(p?.id);
@@ -92,16 +95,23 @@ export function LifePeriods({ periods }: { periods: LifePeriod[] }) {
           <span className="tm-field__label">Place (optional)</span>
           <input className="tm-input" value={place} onChange={(e) => setPlace(e.target.value)} placeholder="Leeds" />
         </label>
-        <div className="row">
-          <label className="tm-field">
-            <span className="tm-field__label">Start</span>
-            <input className="tm-input" type="date" value={start} onChange={(e) => setStart(e.target.value)} />
-          </label>
-          <label className="tm-field">
-            <span className="tm-field__label">End</span>
-            <input className="tm-input" type="date" value={end} onChange={(e) => setEnd(e.target.value)} />
-          </label>
-        </div>
+        {touch ? (
+          <>
+            <DateWheels label="Start" mode="full" value={start} onChange={setStart} fromYear={1900} toYear={lastYear} />
+            <DateWheels label="End" mode="full" value={end} onChange={setEnd} fromYear={1900} toYear={lastYear} />
+          </>
+        ) : (
+          <div className="row">
+            <label className="tm-field">
+              <span className="tm-field__label">Start</span>
+              <input className="tm-input" type="date" value={start} onChange={(e) => setStart(e.target.value)} />
+            </label>
+            <label className="tm-field">
+              <span className="tm-field__label">End</span>
+              <input className="tm-input" type="date" value={end} onChange={(e) => setEnd(e.target.value)} />
+            </label>
+          </div>
+        )}
         {error && <p className="tm-field__error">{error}</p>}
         <div className="row row--center">
           <button type="submit" className="tm-btn tm-btn--primary">

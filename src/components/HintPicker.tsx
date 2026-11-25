@@ -1,4 +1,6 @@
+import { yearsDown } from '../dateParts';
 import type { Hint, LifePeriod } from '../types';
+import { useTouchScreen } from './DateWheels';
 
 /**
  * Asks "When did you first hear it?" with three plain choices: when it came out,
@@ -20,6 +22,7 @@ export function HintPicker({
   releaseDate?: string;
 }) {
   const thisYear = new Date().getUTCFullYear();
+  const touch = useTouchScreen();
   const releaseYear = releaseDate ? Number(releaseDate.slice(0, 4)) : undefined;
   const choices: { kind: Hint['kind']; text: string; pick: () => Hint }[] = [
     { kind: 'onRelease', text: 'When it came out', pick: () => ({ kind: 'onRelease' }) },
@@ -49,7 +52,21 @@ export function HintPicker({
           </button>
         ))}
       </div>
-      {hint.kind === 'year' && (
+      {hint.kind === 'year' && touch && (
+        <select
+          className="tm-input hint-picker__more"
+          aria-label="Year"
+          value={hint.year ?? thisYear}
+          onChange={(e) => onChange({ kind: 'year', year: Number(e.target.value) })}
+        >
+          {yearsDown(1900, thisYear).map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </select>
+      )}
+      {hint.kind === 'year' && !touch && (
         <input
           className="tm-input hint-picker__more"
           type="number"

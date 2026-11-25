@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { SongWithEstimate } from './estimate';
-import { cardSummary, pickRows } from './shareCard';
+import { CARD_H, cardFooter, cardSummary, pickRows } from './shareCard';
 
 const item = (n: number, year: number, genre?: 'indie' | 'pop') => {
   const d = new Date(Date.UTC(year, 5, 1));
@@ -28,5 +28,14 @@ describe('cardSummary', () => {
     expect(cardSummary([item(1, 1995, 'indie'), item(2, 1997, 'indie'), item(3, 2004, 'pop')])).toBe(
       '3 songs · 1995 to 2004 · mostly Indie & alternative',
     );
+  });
+});
+
+describe('the card', () => {
+  it('is 1080 by 1440, the 3:4 shape of an Instagram post', () => {
+    expect(1080 / CARD_H).toBe(3 / 4);
+  });
+  it('gives the address in the footer', () => {
+    expect(cardFooter('tracksbyear.curiouslymade.dev').join('')).toBe('Make your own at tracksbyear.curiouslymade.dev');
   });
 });
