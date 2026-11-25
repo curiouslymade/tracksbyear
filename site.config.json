@@ -1,7 +1,7 @@
 {
-  "name": "Tracks by Year",
-  "shortName": "Tracks by Year",
-  "title": "Tracks by Year",
+  "name": "Tracks by(ear)",
+  "shortName": "Tracks by(ear)",
+  "title": "Tracks by(ear)",
   "description": "Put the songs of your life on a timeline, and see when you first heard each one.",
   "url": "https://tracksbyear.curiouslymade.dev/",
   "hub": "https://curiouslymade.dev/",

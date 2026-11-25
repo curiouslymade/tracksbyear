@@ -23,8 +23,8 @@ describe('csvCell', () => {
 
 describe('filePlaylists', () => {
   it('makes one playlist for each life period, or one for the whole timeline', () => {
-    expect(filePlaylists(groups, 'perPeriod', true).map((p) => p.name)).toEqual(['Tracks by Year: School', 'Tracks by Year: Other']);
-    expect(filePlaylists(groups, 'perPeriod', false).map((p) => p.name)).toEqual(['Tracks by Year: School']);
+    expect(filePlaylists(groups, 'perPeriod', true).map((p) => p.name)).toEqual(['Tracks by(ear): School', 'Tracks by(ear): Other']);
+    expect(filePlaylists(groups, 'perPeriod', false).map((p) => p.name)).toEqual(['Tracks by(ear): School']);
     expect(filePlaylists(groups, 'whole', true)[0].items).toHaveLength(2);
   });
 });
@@ -34,13 +34,13 @@ describe('toCsv and toText', () => {
     const csv = toCsv(filePlaylists(groups, 'perPeriod', true));
     const lines = csv.replace('﻿', '').trim().split('\r\n');
     expect(lines[0]).toBe('Playlist,Position,Title,Artist,Album,Release date,First heard,Spotify');
-    expect(lines[1]).toBe('Tracks by Year: School,1,Wonderwall,Oasis,,02/10/1995,Jan 1996,https://open.spotify.com/track/abc123');
+    expect(lines[1]).toBe('Tracks by(ear): School,1,Wonderwall,Oasis,,02/10/1995,Jan 1996,https://open.spotify.com/track/abc123');
     expect(lines[2]).toContain('"Beyoncé, Jay-Z"');
     expect(lines[2]).toContain('https://open.spotify.com/search/Crazy%20in%20Love%20Beyonc%C3%A9%2C%20Jay-Z');
   });
   it('writes "Artist - Title" lines under each playlist name', () => {
     expect(toText(filePlaylists(groups, 'perPeriod', true))).toBe(
-      'Tracks by Year: School\nOasis - Wonderwall\n\nTracks by Year: Other\nBeyoncé, Jay-Z - Crazy in Love\n',
+      'Tracks by(ear): School\nOasis - Wonderwall\n\nTracks by(ear): Other\nBeyoncé, Jay-Z - Crazy in Love\n',
     );
   });
 });

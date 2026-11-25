@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { SongWithEstimate } from './estimate';
-import { CARD_H, cardFooter, cardSummary, pickRows } from './shareCard';
+import { CARD_H, CARD_W, cardFooter, cardSummary, pickRows, SAFE_BOTTOM, SAFE_TOP } from './shareCard';
 
 const item = (n: number, year: number, genre?: 'indie' | 'pop') => {
   const d = new Date(Date.UTC(year, 5, 1));
@@ -32,8 +32,12 @@ describe('cardSummary', () => {
 });
 
 describe('the card', () => {
-  it('is 1080 by 1440, the 3:4 shape of an Instagram post', () => {
-    expect(1080 / CARD_H).toBe(3 / 4);
+  it('is 1080 by 1920, the 9:16 shape of an Instagram Story', () => {
+    expect([CARD_W, CARD_H]).toEqual([1080, 1920]);
+  });
+  it('keeps clear of the Story buttons at the top and the bottom', () => {
+    expect(SAFE_TOP).toBeGreaterThanOrEqual(250);
+    expect(SAFE_BOTTOM).toBeGreaterThanOrEqual(340);
   });
   it('gives the address in the footer', () => {
     expect(cardFooter('tracksbyear.curiouslymade.dev').join('')).toBe('Make your own at tracksbyear.curiouslymade.dev');
