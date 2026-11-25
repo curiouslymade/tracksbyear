@@ -37,7 +37,7 @@ function saveSetting(key: string, value: string) {
   }
 }
 
-const HEADLINE = 'My tracks by year';
+const HEADLINE = 'Tracks by(ear)';
 
 /** The saved zoom step, or the normal step. */
 function readZoom(): number {
@@ -140,7 +140,7 @@ export function App() {
     <div className="page">
       <header className="top" ref={header}>
         {viewing && <p className="top__kicker">A shared timeline</p>}
-        <h1 className="top__title">{viewing ? 'Their tracks by year' : HEADLINE}</h1>
+        <h1 className="top__title">{HEADLINE}</h1>
         {shared && (
           <p className="top__shared">
             {shared === 'broken' ? 'This share link does not work. It may be cut short. ' : 'You are looking at someone else’s timeline. '}

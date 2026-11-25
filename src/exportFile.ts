@@ -16,8 +16,8 @@ interface FilePlaylist {
 /** The playlists to write: one for each life period, or one for the whole timeline. */
 export function filePlaylists(groups: TimelineGroup[], mode: 'perPeriod' | 'whole', includeOther: boolean): FilePlaylist[] {
   const chosen = groups.filter((g) => g.items.length > 0 && (includeOther || g.period));
-  if (mode === 'whole') return [{ name: 'Tracks by Year', items: chosen.flatMap((g) => g.items) }];
-  return chosen.map((g) => ({ name: `Tracks by Year: ${g.period ? g.period.name : 'Other'}`, items: g.items }));
+  if (mode === 'whole') return [{ name: 'Tracks by(ear)', items: chosen.flatMap((g) => g.items) }];
+  return chosen.map((g) => ({ name: `Tracks by(ear): ${g.period ? g.period.name : 'Other'}`, items: g.items }));
 }
 
 /**

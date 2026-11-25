@@ -1,4 +1,4 @@
-/* Tracks by Year layout. Colours, type and spacing come from the Two Moons tokens. */
+/* Tracks by(ear) layout. Colours, type and spacing come from the Two Moons tokens. */
 
 .page { min-height: 100vh; }
 
@@ -312,7 +312,7 @@ select.hint-picker__more[aria-label="Year"] { width: 140px; }
 
 /* Share modal */
 .share-image { display: grid; grid-template-columns: 160px 1fr; gap: var(--space-5); align-items: start; }
-.share-image__preview { width: 160px; aspect-ratio: 3 / 4; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-sunken); object-fit: cover; }
+.share-image__preview { width: 135px; aspect-ratio: 9 / 16; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-sunken); object-fit: cover; }
 @media (max-width: 480px) { .share-image { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .facts { grid-template-columns: 1fr; } }
 

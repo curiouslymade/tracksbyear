@@ -1,6 +1,8 @@
-# Tracks by Year
+# Tracks by(ear)
 
 Put the songs of your life on a timeline, and see when you first heard each one.
+
+The name reads two ways: tracks by year, and tracks you know by ear.
 
 **Open it:** [tracksbyear.curiouslymade.dev](https://tracksbyear.curiouslymade.dev/)
 
@@ -12,7 +14,7 @@ Add the times of your life, such as school or a first job, then the songs you re
 - **Move songs.** Drag a song along the timeline to change the year.
 - **Breakdown.** See your genres, the decades your songs come from, the songs in each life period, and some highlights.
 - **Search.** Find a song, an artist, a genre or a life period on the timeline.
-- **Share.** Share the timeline as an image or a link, or download it as playlist files (CSV or text). You can upload the playlist files to TuneMyMusic or Soundiiz. The image is 1080 by 1440 pixels, the 3:4 shape of an Instagram post, and it shows the address of the app.
+- **Share.** Share the timeline as an image or a link, or download it as playlist files (CSV or text). You can upload the playlist files to TuneMyMusic or Soundiiz. The image is 1080 by 1920 pixels, the 9:16 shape of an Instagram Story, and it shows the address of the app.
 - **Play.** Each song opens in Spotify or Apple Music. Choose the service in Settings.
 - **Start again.** Settings can clear every song and life period, so you start with a blank timeline.
 

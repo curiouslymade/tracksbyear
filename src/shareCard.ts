@@ -1,17 +1,21 @@
 /**
- * The share image: a 1080 by 1440 card. 3:4 is the tallest shape that an Instagram
- * post shows in full, in the feed and on the profile grid. Drawn on a canvas with the
- * page's own colours and fonts. The footer gives the address, because a picture on
- * Instagram cannot hold a link.
+ * The share image: a 1080 by 1920 card, the 9:16 shape of an Instagram Story.
+ * Instagram puts its own buttons over the top 250 and the bottom 340 pixels of a Story,
+ * so the title and the footer stay inside SAFE_TOP and SAFE_BOTTOM.
+ * Drawn on a canvas with the page's own colours and fonts. The footer gives the address,
+ * because a picture cannot hold a link.
  */
 import type { SongWithEstimate } from './estimate';
 import { genreInfo, NO_GENRE_ACCENT, NO_GENRE_BACKDROP } from './genres';
 import { songGenre } from './road';
 import { genreBreakdown } from './stats';
 
-const CARD_W = 1080;
-export const CARD_H = 1440;
-const MAX_ROWS = 10;
+export const CARD_W = 1080;
+export const CARD_H = 1920;
+/** The parts of a Story that Instagram can cover with its own buttons. */
+export const SAFE_TOP = 250;
+export const SAFE_BOTTOM = 340;
+const MAX_ROWS = 12;
 
 /**
  * Up to `max` songs in timeline order. With more songs, picks them evenly
@@ -89,11 +93,11 @@ export async function drawShareCard(items: SongWithEstimate[], title: string, th
   const width = CARD_W - left * 2;
 
   ctx.fillStyle = heading;
-  ctx.font = '400 80px "Poiret One"';
-  let y = 190;
+  ctx.font = '400 96px "Poiret One"';
+  let y = SAFE_TOP + 110;
   for (const l of wrap(ctx, title, width).slice(0, 2)) {
     ctx.fillText(l, left, y);
-    y += 88;
+    y += 104;
   }
 
   ctx.fillStyle = muted;
@@ -105,7 +109,7 @@ export async function drawShareCard(items: SongWithEstimate[], title: string, th
   const more = items.length - rows.length;
   const first = y + 88;
   // Leave room for the "and N more" line and the footer.
-  const bottom = CARD_H - (more > 0 ? 250 : 190);
+  const bottom = CARD_H - SAFE_BOTTOM - (more > 0 ? 160 : 100);
   const step = Math.min(110, (bottom - first) / Math.max(1, rows.length));
   // Centre a short list between the summary and the footer, so the card has no big gap.
   const used = step * rows.length;
@@ -152,7 +156,7 @@ export async function drawShareCard(items: SongWithEstimate[], title: string, th
   }
 
   // Footer: the Two Moons mark and the name of the app.
-  const fy = CARD_H - 96;
+  const fy = CARD_H - SAFE_BOTTOM - 20;
   ctx.fillStyle = token('--sand');
   ctx.beginPath();
   ctx.arc(left + 10, fy - 9, 10, 0, Math.PI * 2);
